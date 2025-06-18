@@ -1,0 +1,302 @@
+Buatkan sebuah web app modern untuk kelas "12 C Teknik" bernama **Class Teknik**, dibangun dengan **Next.js**, **TailwindCSS**, dan untuk dihosting di **Vercel**.
+
+🔐 Login dan Autentikasi:
+- Gunakan **Firebase Auth Email/Password** untuk login tiap murid.
+- Setelah login, user langsung diarahkan ke `/dashboard`.
+- Semua user datanya juga disimpan di Firebase Realtime Database di path `/users/[uid]` dan dihubungkan dengan UID Firebase Auth.
+- Contoh data user:
+```json
+{
+  "users": {
+    "4E3mbpWxgEQ6xbWuUYAqQzR8aNi1": {
+      "nama": "Muhammad Amin",
+      "email": "amin@teknik.id",
+      "kelas": "12 C",
+      "tanggal_lahir": "2007-10-01",
+      "role": "murid",
+      "isAdmin": true
+    }
+  }
+}
+
+isAdmin: true memberi akses penuh ke panel admin (bisa edit role, tambah user, dll).
+
+
+📦 Admin Panel:
+
+Diakses hanya oleh isAdmin === true.
+
+Fitur:
+
+Tambah murid baru → input data nama, email, password, kelas, tanggal_lahir, role.
+
+Otomatis tambahkan user ke Firebase Auth & simpan data ke Realtime Database.
+
+
+Edit role user, reset password.
+
+Ganti nama kelas dari panel admin (langsung update di JSON).
+
+
+
+📚 Role & Akses:
+
+1. 👤 Murid:
+
+Lihat status kas semua murid (read-only)
+
+Kirim/lihat PR & Info kelas
+
+Lihat jadwal piket/pelajaran
+
+Chat realtime, kirim ucapan ultah
+
+
+
+2. 👑 Ketua Kelas:
+
+Broadcast pengumuman
+
+Pin tugas penting
+
+Bisa lihat semua isi diskusi
+
+
+
+3. 🧑‍🤝‍🧑 Wakil Ketua:
+
+Edit jadwal pelajaran & piket
+
+Pin tugas/diskusi
+
+
+
+4. 💰 Bendahara:
+
+Edit status kas semua murid
+
+Kirim pengingat bayar
+
+Lihat total uang kas masuk
+
+
+
+5. 📝 Sekretaris:
+
+Upload file penting
+
+Arsipkan PR/tugas
+
+
+
+6. 🧹 Seksi Kebersihan:
+
+Atur jadwal piket
+
+Kirim pengingat ke piket
+
+
+
+7. 🛡️ Seksi Keamanan:
+
+Monitor chat & diskusi
+
+Bisa aktifkan slowmode
+
+
+
+
+📁 Struktur Halaman:
+
+/login
+
+/dashboard
+
+/jadwal
+
+/piket
+
+/kas
+
+/chat
+
+/diskusi
+
+/pr
+
+/games
+
+/info
+
+/admin (hanya admin bisa akses)
+
+/profile
+
+/ucapan-ultah
+
+
+🎨 Tampilan:
+
+UI modern, warna biru teknik, putih, abu-abu
+
+Responsive (mobile & desktop)
+
+Gunakan icon Lucide/Heroicons
+
+Notifikasi menggunakan toast/snackbar
+
+
+📂 Contoh Struktur Firebase Realtime Database: kurang lebihnya bisa tambah pake post otomatis 
+
+{
+  "users": {
+    "Oa92IcbO6HNql7FHPnJUmOLQuXr2": {
+      "nama": "Muhammad Amin",
+      "email": "amin@gmail.com",
+      "kelas": "12 C Teknik",
+      "tanggal_lahir": "2007-10-01",
+      "role": "admin|murid",
+      "isAdmin": true
+    },
+    "uid_2": {
+      "nama": "Rudi Hartanto",
+      "email": "rudi@gmail.com",
+      "kelas": "12 C Teknik",
+      "tanggal_lahir": "2007-09-14",
+      "role": "bendahara",
+      "isAdmin": false
+    }
+    // dst sampai 33 murid
+  },
+
+  "kas": {
+    "uid_2": {
+      "total": 15000,
+      "status": "belum",
+      "riwayat": {
+        "2025-05": 10000,
+        "2025-06": 5000
+      }
+    }
+    // uid lainnya
+  },
+
+  "jadwal": {
+    "pelajaran": {
+      "senin": ["Fisika", "Matematika"],
+      "selasa": ["Bahasa Indonesia", "Bahasa Inggris"]
+    },
+    "piket": {
+      "senin": ["uid_1", "uid_3"],
+      "selasa": ["uid_2"]
+    }
+  },
+
+  "pr": {
+    "pr_1": {
+      "judul": "PR Fisika",
+      "isi": "Kerjakan halaman 12-15",
+      "pengirim": "uid_5",
+      "timestamp": "2025-06-17T12:00:00Z"
+    }
+  },
+
+  "info": {
+    "info_1": {
+      "judul": "Kegiatan Jumat",
+      "isi": "Bersih-bersih kelas jam 7 pagi",
+      "pengirim": "uid_1",
+      "timestamp": "2025-06-16T08:30:00Z",
+      "pin": false
+    }
+  },
+
+  "chat": {
+    "chat_1": {
+      "from": "uid_1",
+      "message": "Halo semuanya!",
+      "timestamp": "2025-06-18T07:45:00Z"
+    }
+  },
+
+  "ultah": {
+    "uid_10": {
+      "tanggal_lahir": "2007-06-18",
+      "ucapan": {
+        "ucapan_1": {
+          "from": "uid_2",
+          "pesan": "Selamat ulang tahun!"
+        }
+      }
+    }
+  },
+
+  "diskusi": {
+    "topik_1": {
+      "judul": "PR Matematika kapan dikumpul?",
+      "dibuat_oleh": "uid_3",
+      "timestamp": "2025-06-17T13:00:00Z",
+      "isi": {
+        "komen_1": {
+          "from": "uid_2",
+          "pesan": "Paling lambat Jumat"
+        }
+      }
+    }
+  },
+
+  "games": {
+    "game_1": {
+      "judul": "Tebak Gambar",
+      "link": "https://tebakgambar.vercel.app"
+    }
+  },
+
+  "pengaturan": {
+    "nama_kelas": "12 C Teknik",
+    "warna_tema": "#1E3A8A",
+    "versi_aplikasi": "v1.0.0"
+  }
+}
+
+📢 Fitur Otomatis:
+
+Otomatis deteksi ultah → muncul di beranda semua user
+
+Admin bisa tambah murid tanpa edit kode
+
+Setiap perubahan kas/tugas/info langsung update realtime (pakai onValue listener)
+
+
+📡 Firebase Setup:
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyD5ijDk5ffUXFaOz7qswNArYVlabOXXGPs",
+  authDomain: "classteknik-e076b.firebaseapp.com",
+  databaseURL: "https://classteknik-e076b-default-rtdb.firebaseio.com",
+  projectId: "classteknik-e076b",
+  storageBucket: "classteknik-e076b.firebasestorage.app",
+  messagingSenderId: "455736395718",
+  appId: "1:455736395718:web:2deacd4c4f40811486d4c7",
+  measurementId: "G-EJ15MWTSJ3"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+🧠 Deployment:
+
+Pastikan environment variable Firebase di Vercel disesuaikan
+
+Firebase Realtime Database harus mengizinkan read/write untuk authenticated user
+
+Gunakan route protection di Next.js untuk halaman yang butuh login
