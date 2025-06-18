@@ -1,8 +1,5 @@
 /**
  * Entry-point Express untuk Vercel Functions.
- * - **Jangan** panggil `listen()` di lingkungan Vercel; ekspor saja `app`.
- * - Kalau **bukan** di Vercel (local dev), server tetap menyala di :5000
- *   + plus hot-reload lewat Vite middleware.
  */
 
 import express, { Request, Response, NextFunction } from "express";
@@ -21,11 +18,11 @@ app.use((req, res, next) => {
   const start = Date.now();
   let captured: unknown;
 
-  const origJson = res.json.bind(res);
-  res.json = ((body, ...rest) => {
+  const origJson = res.json.bind(res) as typeof res.json;            // FIX: cast tepat
+  res.json = ((body: any): Response => {                             // FIX: tipe param
     captured = body;
-    return origJson(body, ...rest);
-  }) as any;
+    return origJson(body);                                           // FIX: tanpa rest
+  }) as typeof res.json;
 
   res.on("finish", () => {
     if (!req.path.startsWith("/api")) return;
@@ -43,7 +40,6 @@ app.use((req, res, next) => {
 (async () => {
   await registerRoutes(app);
 
-  // global error handler – biar lambda “reset” kalau fatal
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status ?? err.statusCode ?? 500;
     res.status(status).json({ message: err.message ?? "Internal Server Error" });
@@ -54,7 +50,6 @@ app.use((req, res, next) => {
   const isDev = !isVercel && process.env.NODE_ENV !== "production";
 
   if (isDev) {
-    /* Local development: Vite + live reload */
     const server = http.createServer(app);
     await setupVite(app, server);
     const PORT = 5000;
@@ -62,10 +57,9 @@ app.use((req, res, next) => {
       log(`dev server ready → http://localhost:${PORT}`)
     );
   } else {
-    /* Production (Vercel) */
     serveStatic(app);
   }
 })();
 
-/* ---- THE one-liner Vercel cares about ---- */
+/* one-liner Vercel cares about */
 export default app;
