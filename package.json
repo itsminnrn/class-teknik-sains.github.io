@@ -5,13 +5,8 @@
   "license": "MIT",
 
   "scripts": {
-    // ► emulate full Vercel stack locally (API + SPA + rewrites)
     "dev": "vercel dev",
-
-    // ► production build = Vite only; Vercel akan meng-compile TypeScript di api/ sendiri
     "build": "vite build",
-
-    // ► opsional—untuk self-hosting di VPS (bukan Vercel)
     "start": "NODE_ENV=production node api/index.ts",
 
     "check": "tsc",
