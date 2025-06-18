@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Class Teknik - Sistem Manajemen Kelas 12 C Teknik</title>
+    <meta name="description" content="Sistem manajemen kelas modern untuk 12 C Teknik. Kelola kas kelas, jadwal pelajaran, piket, PR, chat real-time, dan informasi kelas dengan mudah." />
+    <meta name="keywords" content="class teknik, manajemen kelas, kas kelas, jadwal pelajaran, sistem sekolah, 12 c teknik" />
+    <meta name="author" content="Class Teknik Team" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Class Teknik - Sistem Manajemen Kelas 12 C Teknik" />
+    <meta property="og:description" content="Sistem manajemen kelas modern untuk 12 C Teknik dengan fitur kas kelas, jadwal, chat real-time, dan banyak lagi." />
+    <meta property="og:url" content="https://classteknik.vercel.app" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Class Teknik - Sistem Manajemen Kelas 12 C Teknik" />
+    <meta property="twitter:description" content="Sistem manajemen kelas modern untuk 12 C Teknik dengan fitur kas kelas, jadwal, chat real-time, dan banyak lagi." />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzFFM0E4QSIvPgo8cGF0aCBkPSJNMTkgMjFWNWEyIDIgMCAwMC0yLTJIN2EyIDIgMCAwMC0yIDJ2MTZtMTQgMGgyTTE5IDIxaC01bS05IDBoM20yIDBINW01IDAtNXYtNWExIDEgMCAwMTEtMWgyYTEgMSAwIDAxMSAxdjVtLTQgMGg0IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K" />
+    
+    <!-- PWA Support -->
+    <meta name="theme-color" content="#1E3A8A" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Class Teknik" />
+    
+    <!-- Preconnect to improve performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <style>
+      /* Critical CSS for faster loading */
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fafafa;
+      }
+      
+      #root {
+        min-height: 100vh;
+      }
+      
+      /* Loading spinner */
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e5e7eb;
+        border-top: 4px solid #1E3A8A;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #fafafa;
+      }
+      
+      .loading-text {
+        margin-top: 16px;
+        color: #6b7280;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <!-- Loading state -->
+      <div class="loading-container">
+        <div style="display: flex; align-items: center; margin-bottom: 24px;">
+          <div style="width: 48px; height: 48px; background-color: #1E3A8A; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+          </div>
+          <div>
+            <h1 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0;">Class Teknik</h1>
+            <p style="font-size: 14px; color: #6b7280; margin: 4px 0 0 0;">12 C Teknik</p>
+          </div>
+        </div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Memuat aplikasi...</div>
+      </div>
+    </div>
+    
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+    
+    <!-- Remove loading state when app loads -->
+    <script>
+      // Remove loading state when React app mounts
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          const loadingContainer = document.querySelector('.loading-container');
+          if (loadingContainer && document.querySelector('[data-reactroot]')) {
+            loadingContainer.style.display = 'none';
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
