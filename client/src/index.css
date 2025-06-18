@@ -197,7 +197,7 @@
 
 /* Custom button hover effects */
 .btn-teknik {
-  @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-smooth;
+  @apply bg-primary text-primary-foreground hover:bg-primary hover:opacity-90 transition-smooth;
 }
 
 .btn-teknik-outline {
