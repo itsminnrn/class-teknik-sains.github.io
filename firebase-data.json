@@ -1,0 +1,272 @@
+{
+  "users": {
+    "YcAkHiKAQHdFdKBqxgNElRvB3fD2": {
+      "uid": "YcAkHiKAQHdFdKBqxgNElRvB3fD2",
+      "nama": "Muhammad Amin",
+      "email": "admin@classteknik.com",
+      "kelas": "12 C Teknik",
+      "tanggal_lahir": "2005-01-15",
+      "role": "admin",
+      "isAdmin": true
+    },
+    "sample_user_1": {
+      "uid": "sample_user_1",
+      "nama": "Ahmad Rizki",
+      "email": "ahmad.rizki@gmail.com",
+      "kelas": "12 C Teknik",
+      "tanggal_lahir": "2005-03-20",
+      "role": "ketua_kelas",
+      "isAdmin": false
+    },
+    "sample_user_2": {
+      "uid": "sample_user_2",
+      "nama": "Sari Wulandari",
+      "email": "sari.wulan@gmail.com",
+      "kelas": "12 C Teknik",
+      "tanggal_lahir": "2005-07-10",
+      "role": "bendahara",
+      "isAdmin": false
+    },
+    "sample_user_3": {
+      "uid": "sample_user_3",
+      "nama": "Budi Santoso",
+      "email": "budi.santoso@gmail.com",
+      "kelas": "12 C Teknik",
+      "tanggal_lahir": "2005-09-05",
+      "role": "sekretaris",
+      "isAdmin": false
+    }
+  },
+  "kas": {
+    "YcAkHiKAQHdFdKBqxgNElRvB3fD2": {
+      "uid": "YcAkHiKAQHdFdKBqxgNElRvB3fD2",
+      "total": 50000,
+      "status": "sudah",
+      "riwayat": {
+        "2024-01": 10000,
+        "2024-02": 15000,
+        "2024-03": 25000
+      }
+    },
+    "sample_user_1": {
+      "uid": "sample_user_1",
+      "total": 45000,
+      "status": "sudah",
+      "riwayat": {
+        "2024-01": 10000,
+        "2024-02": 15000,
+        "2024-03": 20000
+      }
+    },
+    "sample_user_2": {
+      "uid": "sample_user_2",
+      "total": 30000,
+      "status": "belum",
+      "riwayat": {
+        "2024-01": 10000,
+        "2024-02": 20000
+      }
+    },
+    "sample_user_3": {
+      "uid": "sample_user_3",
+      "total": 25000,
+      "status": "belum",
+      "riwayat": {
+        "2024-01": 15000,
+        "2024-02": 10000
+      }
+    }
+  },
+  "jadwal": {
+    "pelajaran": {
+      "senin": ["Matematika", "Fisika", "Bahasa Indonesia", "Kimia", "Olahraga"],
+      "selasa": ["Bahasa Inggris", "Sejarah", "Matematika", "Fisika", "Seni Budaya"],
+      "rabu": ["Kimia", "Biologi", "Bahasa Indonesia", "Geografi", "Matematika"],
+      "kamis": ["PKn", "Bahasa Inggris", "Fisika", "Kimia", "Prakarya"],
+      "jumat": ["Agama", "Matematika", "Biologi", "Bahasa Indonesia"],
+      "sabtu": ["Olahraga", "Seni Budaya", "Geografi", "Sejarah"]
+    },
+    "piket": {
+      "senin": ["Ahmad Rizki", "Sari Wulandari"],
+      "selasa": ["Budi Santoso", "Muhammad Amin"],
+      "rabu": ["Ahmad Rizki", "Sari Wulandari"],
+      "kamis": ["Budi Santoso", "Muhammad Amin"],
+      "jumat": ["Ahmad Rizki", "Sari Wulandari"],
+      "sabtu": ["Budi Santoso", "Muhammad Amin"]
+    }
+  },
+  "pr": {
+    "-PR001": {
+      "id": "-PR001",
+      "judul": "Tugas Matematika Bab Integral",
+      "isi": "Kerjakan soal-soal integral pada halaman 125-130. Deadline: Senin, 25 Juni 2024",
+      "pengirim": "Ahmad Rizki",
+      "timestamp": "2024-06-18T10:30:00.000Z",
+      "priority": "urgent"
+    },
+    "-PR002": {
+      "id": "-PR002",
+      "judul": "Laporan Praktikum Fisika",
+      "isi": "Buat laporan praktikum tentang hukum Newton. Format sesuai panduan yang sudah diberikan.",
+      "pengirim": "Sari Wulandari",
+      "timestamp": "2024-06-17T14:15:00.000Z",
+      "priority": "normal"
+    },
+    "-PR003": {
+      "id": "-PR003",
+      "judul": "Essay Bahasa Indonesia",
+      "isi": "Tulis essay tentang 'Pentingnya Literasi Digital' minimal 500 kata.",
+      "pengirim": "Budi Santoso",
+      "timestamp": "2024-06-16T09:20:00.000Z",
+      "priority": "ringan"
+    }
+  },
+  "info": {
+    "-INFO001": {
+      "id": "-INFO001",
+      "judul": "Pengumuman UAS Semester Genap",
+      "isi": "UAS akan dimulai tanggal 1 Juli 2024. Jadwal lengkap sudah ditempel di mading kelas. Mohon persiapkan diri dengan baik.",
+      "pengirim": "Muhammad Amin",
+      "timestamp": "2024-06-18T08:00:00.000Z",
+      "pin": true
+    },
+    "-INFO002": {
+      "id": "-INFO002",
+      "judul": "Rapat Kelas",
+      "isi": "Rapat kelas akan diadakan hari Jumat, 21 Juni 2024 pukul 13.00 di ruang kelas. Agenda: persiapan perpisahan dan evaluasi kegiatan kelas.",
+      "pengirim": "Ahmad Rizki",
+      "timestamp": "2024-06-17T16:30:00.000Z",
+      "pin": false
+    },
+    "-INFO003": {
+      "id": "-INFO003",
+      "judul": "Kas Kelas Bulan Juni",
+      "isi": "Reminder: Iuran kas kelas bulan Juni sebesar Rp 15.000. Mohon segera disetor ke bendahara kelas.",
+      "pengirim": "Sari Wulandari",
+      "timestamp": "2024-06-15T11:45:00.000Z",
+      "pin": false
+    }
+  },
+  "chat": {
+    "-CHAT001": {
+      "id": "-CHAT001",
+      "from": "Ahmad Rizki",
+      "message": "Halo semua! Jangan lupa PR matematika dikumpul besok ya 📚",
+      "timestamp": "2024-06-18T12:30:00.000Z"
+    },
+    "-CHAT002": {
+      "id": "-CHAT002",
+      "from": "Sari Wulandari",
+      "message": "Terima kasih remindernya! Sudah selesai kok 😊",
+      "timestamp": "2024-06-18T12:35:00.000Z"
+    },
+    "-CHAT003": {
+      "id": "-CHAT003",
+      "from": "Muhammad Amin",
+      "message": "Bagus! Semangat terus untuk UAS nanti 💪",
+      "timestamp": "2024-06-18T12:40:00.000Z"
+    },
+    "-CHAT004": {
+      "id": "-CHAT004",
+      "from": "Budi Santoso",
+      "message": "Siap pak admin! Btw, jadwal piket minggu depan sudah fix belum?",
+      "timestamp": "2024-06-18T12:45:00.000Z"
+    }
+  },
+  "diskusi": {
+    "-DISKUSI001": {
+      "id": "-DISKUSI001",
+      "judul": "Diskusi Persiapan UAS Matematika",
+      "dibuat_oleh": "Ahmad Rizki",
+      "timestamp": "2024-06-18T09:00:00.000Z",
+      "isi": {
+        "reply001": {
+          "from": "Ahmad Rizki",
+          "pesan": "Bagaimana persiapan kalian untuk UAS Matematika? Ada materi yang masih belum dipahami?",
+          "timestamp": "2024-06-18T09:00:00.000Z"
+        },
+        "reply002": {
+          "from": "Sari Wulandari",
+          "pesan": "Saya masih kesulitan di bagian integral pak. Bisa dijelaskan lagi?",
+          "timestamp": "2024-06-18T09:15:00.000Z"
+        },
+        "reply003": {
+          "from": "Muhammad Amin",
+          "pesan": "Bagaimana kalau kita buat jadwal belajar kelompok? Bisa saling membantu",
+          "timestamp": "2024-06-18T09:30:00.000Z"
+        }
+      }
+    },
+    "-DISKUSI002": {
+      "id": "-DISKUSI002",
+      "judul": "Rencana Kegiatan Perpisahan Kelas",
+      "dibuat_oleh": "Muhammad Amin",
+      "timestamp": "2024-06-17T15:00:00.000Z",
+      "isi": {
+        "reply001": {
+          "from": "Muhammad Amin",
+          "pesan": "Apa saja yang ingin kalian lakukan untuk kegiatan perpisahan nanti?",
+          "timestamp": "2024-06-17T15:00:00.000Z"
+        },
+        "reply002": {
+          "from": "Budi Santoso",
+          "pesan": "Bagaimana kalau kita bikin video kenangan dan makan bersama?",
+          "timestamp": "2024-06-17T15:20:00.000Z"
+        }
+      }
+    }
+  },
+  "ucapan_ultah": {
+    "sample_user_1": {
+      "uid": "sample_user_1",
+      "tanggal_lahir": "2005-03-20",
+      "ucapan": {
+        "ucapan001": {
+          "from": "Muhammad Amin",
+          "pesan": "Selamat ulang tahun Ahmad! Semoga panjang umur dan sukses selalu 🎉",
+          "timestamp": "2024-03-20T08:00:00.000Z"
+        },
+        "ucapan002": {
+          "from": "Sari Wulandari",
+          "pesan": "Happy birthday ketua kelas! Terima kasih sudah jadi pemimpin yang baik 🎂",
+          "timestamp": "2024-03-20T09:15:00.000Z"
+        }
+      }
+    },
+    "sample_user_2": {
+      "uid": "sample_user_2",
+      "tanggal_lahir": "2005-07-10",
+      "ucapan": {
+        "ucapan001": {
+          "from": "Ahmad Rizki",
+          "pesan": "Selamat ulang tahun bendahara terbaik! 🎈",
+          "timestamp": "2024-07-10T07:30:00.000Z"
+        }
+      }
+    }
+  },
+  "games": {
+    "-GAME001": {
+      "id": "-GAME001",
+      "judul": "Kuis Matematika Online",
+      "link": "https://kahoot.it/challenge/12345"
+    },
+    "-GAME002": {
+      "id": "-GAME002",
+      "judul": "Tebak Gambar Fisika",
+      "link": "https://quizizz.com/join?gc=67890"
+    },
+    "-GAME003": {
+      "id": "-GAME003",
+      "judul": "Quiz Sejarah Indonesia",
+      "link": "https://forms.google.com/quiz-sejarah"
+    }
+  },
+  "pengaturan": {
+    "aplikasi": {
+      "nama_kelas": "12 C Teknik",
+      "warna_tema": "#1E3A8A",
+      "versi_aplikasi": "1.0.0"
+    }
+  }
+}

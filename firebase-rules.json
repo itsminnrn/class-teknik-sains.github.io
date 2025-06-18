@@ -1,0 +1,245 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    
+    "users": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid == $uid || root.child('users').child(auth.uid).child('isAdmin').val() == true)",
+        ".write": "auth != null && (auth.uid == $uid || root.child('users').child(auth.uid).child('isAdmin').val() == true)",
+        ".validate": "newData.hasChildren(['uid', 'nama', 'email', 'kelas', 'tanggal_lahir', 'role', 'isAdmin'])",
+        "uid": {
+          ".validate": "newData.isString() && newData.val() == $uid"
+        },
+        "nama": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$/)"
+        },
+        "kelas": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "tanggal_lahir": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}$/)"
+        },
+        "role": {
+          ".validate": "newData.isString() && (newData.val() == 'murid' || newData.val() == 'ketua_kelas' || newData.val() == 'wakil_ketua' || newData.val() == 'bendahara' || newData.val() == 'sekretaris' || newData.val() == 'seksi_kebersihan' || newData.val() == 'seksi_keamanan' || newData.val() == 'admin')"
+        },
+        "isAdmin": {
+          ".validate": "newData.isBoolean()"
+        }
+      }
+    },
+    
+    "kas": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() == 'bendahara' || root.child('users').child(auth.uid).child('isAdmin').val() == true)",
+        ".validate": "newData.hasChildren(['uid', 'total', 'status', 'riwayat'])",
+        "uid": {
+          ".validate": "newData.isString()"
+        },
+        "total": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "status": {
+          ".validate": "newData.isString() && (newData.val() == 'sudah' || newData.val() == 'belum')"
+        },
+        "riwayat": {
+          "$month": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          }
+        }
+      }
+    },
+    
+    "jadwal": {
+      ".read": "auth != null",
+      ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() == 'ketua_kelas' || root.child('users').child(auth.uid).child('role').val() == 'sekretaris' || root.child('users').child(auth.uid).child('isAdmin').val() == true)",
+      "pelajaran": {
+        "$hari": {
+          ".validate": "newData.hasChildren() && ($hari == 'senin' || $hari == 'selasa' || $hari == 'rabu' || $hari == 'kamis' || $hari == 'jumat' || $hari == 'sabtu')",
+          "$index": {
+            ".validate": "newData.isString() && newData.val().length > 0"
+          }
+        }
+      },
+      "piket": {
+        "$hari": {
+          ".validate": "newData.hasChildren() && ($hari == 'senin' || $hari == 'selasa' || $hari == 'rabu' || $hari == 'kamis' || $hari == 'jumat' || $hari == 'sabtu')",
+          "$index": {
+            ".validate": "newData.isString() && newData.val().length > 0"
+          }
+        }
+      }
+    },
+    
+    "pr": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$prId": {
+        ".validate": "newData.hasChildren(['id', 'judul', 'isi', 'pengirim', 'timestamp', 'priority'])",
+        "id": {
+          ".validate": "newData.isString() && newData.val() == $prId"
+        },
+        "judul": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 200"
+        },
+        "isi": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "pengirim": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "timestamp": {
+          ".validate": "newData.isString()"
+        },
+        "priority": {
+          ".validate": "newData.isString() && (newData.val() == 'urgent' || newData.val() == 'normal' || newData.val() == 'ringan')"
+        }
+      }
+    },
+    
+    "info": {
+      ".read": "auth != null",
+      ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() == 'ketua_kelas' || root.child('users').child(auth.uid).child('role').val() == 'sekretaris' || root.child('users').child(auth.uid).child('isAdmin').val() == true)",
+      "$infoId": {
+        ".validate": "newData.hasChildren(['id', 'judul', 'isi', 'pengirim', 'timestamp', 'pin'])",
+        "id": {
+          ".validate": "newData.isString() && newData.val() == $infoId"
+        },
+        "judul": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 200"
+        },
+        "isi": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "pengirim": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "timestamp": {
+          ".validate": "newData.isString()"
+        },
+        "pin": {
+          ".validate": "newData.isBoolean()"
+        }
+      }
+    },
+    
+    "chat": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$chatId": {
+        ".validate": "newData.hasChildren(['id', 'from', 'message', 'timestamp']) && newData.child('from').val() == root.child('users').child(auth.uid).child('nama').val()",
+        "id": {
+          ".validate": "newData.isString() && newData.val() == $chatId"
+        },
+        "from": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "message": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 1000"
+        },
+        "timestamp": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    
+    "diskusi": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$diskusiId": {
+        ".validate": "newData.hasChildren(['id', 'judul', 'dibuat_oleh', 'timestamp', 'isi'])",
+        "id": {
+          ".validate": "newData.isString() && newData.val() == $diskusiId"
+        },
+        "judul": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 200"
+        },
+        "dibuat_oleh": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "timestamp": {
+          ".validate": "newData.isString()"
+        },
+        "isi": {
+          "$replyId": {
+            ".validate": "newData.hasChildren(['from', 'pesan', 'timestamp'])",
+            "from": {
+              ".validate": "newData.isString() && newData.val().length > 0"
+            },
+            "pesan": {
+              ".validate": "newData.isString() && newData.val().length > 0"
+            },
+            "timestamp": {
+              ".validate": "newData.isString()"
+            }
+          }
+        }
+      }
+    },
+    
+    "ucapan_ultah": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$uid": {
+        "uid": {
+          ".validate": "newData.isString() && newData.val() == $uid"
+        },
+        "tanggal_lahir": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}$/)"
+        },
+        "ucapan": {
+          "$ucapanId": {
+            ".validate": "newData.hasChildren(['from', 'pesan', 'timestamp'])",
+            "from": {
+              ".validate": "newData.isString() && newData.val().length > 0"
+            },
+            "pesan": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 500"
+            },
+            "timestamp": {
+              ".validate": "newData.isString()"
+            }
+          }
+        }
+      }
+    },
+    
+    "games": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      "$gameId": {
+        ".validate": "newData.hasChildren(['id', 'judul', 'link'])",
+        "id": {
+          ".validate": "newData.isString() && newData.val() == $gameId"
+        },
+        "judul": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
+        },
+        "link": {
+          ".validate": "newData.isString() && newData.val().matches(/^https?:\\/\\/.+/)"
+        }
+      }
+    },
+    
+    "pengaturan": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      "aplikasi": {
+        ".validate": "newData.hasChildren(['nama_kelas', 'warna_tema', 'versi_aplikasi'])",
+        "nama_kelas": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "warna_tema": {
+          ".validate": "newData.isString() && newData.val().matches(/^#[0-9A-Fa-f]{6}$/)"
+        },
+        "versi_aplikasi": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d+\\.\\d+\\.\\d+$/)"
+        }
+      }
+    }
+  }
+}
