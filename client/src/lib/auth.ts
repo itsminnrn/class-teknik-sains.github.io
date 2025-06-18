@@ -5,7 +5,7 @@ import {
   User as FirebaseUser,
   onAuthStateChanged
 } from "firebase/auth";
-import { ref, set, get, onValue } from "firebase/database";
+import { ref, set, get, onValue, update } from "firebase/database";
 import { auth, database } from "./firebase";
 import { User, userSchema } from "@shared/schema";
 
@@ -38,12 +38,17 @@ export const createUser = async (email: string, password: string, userData: Omit
 };
 
 export const getUserData = async (uid: string): Promise<User | null> => {
-  const snapshot = await get(ref(database, `users/${uid}`));
-  if (snapshot.exists()) {
-    const data = snapshot.val();
-    return userSchema.parse(data);
+  try {
+    const snapshot = await get(ref(database, `users/${uid}`));
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      return userSchema.parse(data);
+    }
+    return null;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return null;
   }
-  return null;
 };
 
 export const subscribeToUserData = (uid: string, callback: (user: User | null) => void) => {
@@ -64,13 +69,80 @@ export const subscribeToUserData = (uid: string, callback: (user: User | null) =
   });
 };
 
+export const createOrUpdateUserProfile = async (uid: string, userData: Partial<User>): Promise<User> => {
+  try {
+    const userRef = ref(database, `users/${uid}`);
+    await update(userRef, userData);
+    
+    const updatedData = await getUserData(uid);
+    if (!updatedData) {
+      throw new Error("Failed to create or update user profile");
+    }
+    return updatedData;
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    throw error;
+  }
+};
+
+export const initializeUserProfile = async (firebaseUser: any): Promise<User> => {
+  // First try to get existing user data
+  let userData = await getUserData(firebaseUser.uid);
+  
+  if (!userData) {
+    // Create default user profile for new users
+    const defaultUserData: User = {
+      uid: firebaseUser.uid,
+      nama: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'User',
+      email: firebaseUser.email || '',
+      kelas: '12 C Teknik',
+      tanggal_lahir: '2000-01-01',
+      role: 'murid' as const,
+      isAdmin: false
+    };
+    
+    // Special case for admin user
+    if (firebaseUser.uid === 'YcAkHiKAQHdFdKBqxgNElRvB3fD2') {
+      defaultUserData.nama = 'Muhammad Amin';
+      defaultUserData.role = 'admin';
+      defaultUserData.isAdmin = true;
+    }
+    
+    try {
+      await set(ref(database, `users/${firebaseUser.uid}`), defaultUserData);
+      userData = defaultUserData;
+    } catch (error) {
+      console.error("Error creating user profile:", error);
+      // Return the default data even if we can't save to Firebase
+      userData = defaultUserData;
+    }
+  }
+  
+  return userData;
+};
+
 export const subscribeToAuthState = (callback: (authState: AuthState) => void) => {
   return onAuthStateChanged(auth, async (firebaseUser) => {
     if (firebaseUser) {
       callback({ user: firebaseUser, userData: null, loading: true });
       
-      const userData = await getUserData(firebaseUser.uid);
-      callback({ user: firebaseUser, userData, loading: false });
+      try {
+        const userData = await initializeUserProfile(firebaseUser);
+        callback({ user: firebaseUser, userData, loading: false });
+      } catch (error) {
+        console.error("Error initializing user profile:", error);
+        // Create a fallback user profile for admin
+        const fallbackUserData: User = {
+          uid: firebaseUser.uid,
+          nama: firebaseUser.uid === 'YcAkHiKAQHdFdKBqxgNElRvB3fD2' ? 'Muhammad Amin' : 'User',
+          email: firebaseUser.email || '',
+          kelas: '12 C Teknik',
+          tanggal_lahir: '2000-01-01',
+          role: firebaseUser.uid === 'YcAkHiKAQHdFdKBqxgNElRvB3fD2' ? 'admin' : 'murid',
+          isAdmin: firebaseUser.uid === 'YcAkHiKAQHdFdKBqxgNElRvB3fD2'
+        };
+        callback({ user: firebaseUser, userData: fallbackUserData, loading: false });
+      }
     } else {
       callback({ user: null, userData: null, loading: false });
     }
